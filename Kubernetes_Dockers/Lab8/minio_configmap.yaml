@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minio-config
+data:
+  MINIO_VOLUMES: "/data"
+  MINIO_SERVER_URL: "http://minio:9000"
