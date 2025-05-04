@@ -44,10 +44,7 @@ This lab introduces the fundamental concepts of containerization. Participants w
 Start a MinIO container using the following command:
 
 ```bash
-docker run -d -p 9000:9000 -p 9001:9001 --name minio 
-  -e "MINIO_ROOT_USER=admin" 
-  -e "MINIO_ROOT_PASSWORD=password" 
-  minio/minio server /data --console-address ":9001"
+docker run -d -p 9000:9000 -p 9001:9001 --name minio -e "MINIO_ROOT_USER=admin" -e "MINIO_ROOT_PASSWORD=password" minio/minio server /data --console-address ":9001"
 ```
 
 ### 🔍 Explanation of the Command:
@@ -71,7 +68,7 @@ You should see the `minio` container running on ports 9000 and 9001.
 
 ### 🌐 Access the MinIO Console
 
-- Open your browser and go to: `http://localhost:9001`
+- Go to PORTS tab next to TERMINAL and click on 9001 -> "Open in a browser" option
 - Login:
   - **Username**: `admin`
   - **Password**: `password`
