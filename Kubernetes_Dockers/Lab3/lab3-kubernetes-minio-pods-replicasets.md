@@ -25,8 +25,8 @@ In this lab, you will deploy MinIOâ€”a high-performance object storage solutionâ
 Start k3s Cluster
 
 ```bash
-curl -sfL https://get.k3s.io | sh -
-alias kubectl='sudo k3s kubectl'
+minikube start
+alias kubectl='kubectl'
 ```
 
 Verify the cluster is running:
