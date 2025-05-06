@@ -37,7 +37,7 @@ By the end of this lab, you will be able to:
 ## 🛠️ Step-by-Step Instructions
 
 ## ☘️ Pre-requiste : Verify Cluster
-1. Make sure your minikube cluster is running 
+1. Make sure your minikube/k3s cluster is running 
 
 ```bash
 kubectl get nodes
@@ -47,7 +47,8 @@ You should see a node with the status `Ready`.
 2. If above step failed, then start Minikube with 4 CPUs and 8GB of memory:
 
 ```bash
-minikube start --cpus=4 --memory=8192
+curl -sfL https://get.k3s.io | sh -
+alias kubectl='sudo k3s kubectl'
 ```
 
 ### ☘️ Cleanup

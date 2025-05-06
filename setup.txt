@@ -1,0 +1,84 @@
+sudo apt update
+sudo apt install nginx certbot python3-certbot-nginx -y
+touch /etc/nginx/sites-available/code-server
+nano /etc/nginx/sites-available/code-server
+
+server {
+    listen 80;
+    server_name student1.technoavengers.in;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection upgrade;
+        proxy_set_header Accept-Encoding gzip;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+
+
+sudo ln -s /etc/nginx/sites-available/code-server /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl reload nginx
+sudo certbot --nginx -d student1.technoavengers.in
+sudo systemctl restart nginx
+
+
+
+
+
+
+
+#!/bin/bash
+
+# Example usage: ./setup-nginx-certbot.sh student1.technoavengers.in
+
+DOMAIN="$1"
+PORT=8080
+
+if [ -z "$DOMAIN" ]; then
+  echo "❌ Error: No domain name provided."
+  echo "Usage: $0 student1.technoavengers.in"
+  exit 1
+fi
+
+echo "✅ Setting up Nginx reverse proxy for domain: $DOMAIN"
+
+# Create Nginx config
+NGINX_CONF="/etc/nginx/sites-available/code-server"
+cat <<EOF | sudo tee "$NGINX_CONF"
+server {
+    listen 80;
+    server_name $DOMAIN;
+
+    location / {
+        proxy_pass http://localhost:$PORT;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection upgrade;
+        proxy_set_header Accept-Encoding gzip;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
+}
+EOF
+
+# Enable site
+sudo ln -sf "$NGINX_CONF" /etc/nginx/sites-enabled/
+
+# Test and reload Nginx
+sudo nginx -t && sudo systemctl reload nginx
+
+# Run certbot with domain
+sudo certbot --nginx -d "$DOMAIN" --non-interactive --agree-tos -m yuvaan220161@gmail.com --redirect
+
+# Restart Nginx
+sudo systemctl restart nginx
+
+echo "✅ HTTPS with Let's Encrypt is now active for $DOMAIN"
+
+
+
+chmod +x setup-nginx-certbot.sh
+./setup-nginx-certbot.sh student3.technoavengers.in
+

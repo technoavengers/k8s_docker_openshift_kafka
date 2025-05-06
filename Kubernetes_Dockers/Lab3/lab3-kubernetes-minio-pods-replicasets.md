@@ -22,10 +22,11 @@ In this lab, you will deploy MinIO—a high-performance object storage solution�
 
 ## ☘️ Step 1: Starting a Minikube Cluster
 
-Start Minikube with 4 CPUs and 8GB of memory:
+Start k3s Cluster
 
 ```bash
-minikube start --cpus=4 --memory=8192
+curl -sfL https://get.k3s.io | sh -
+alias kubectl='sudo k3s kubectl'
 ```
 
 Verify the cluster is running:
