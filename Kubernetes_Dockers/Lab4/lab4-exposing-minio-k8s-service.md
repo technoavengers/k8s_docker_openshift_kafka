@@ -119,7 +119,8 @@ spec:
     protocol: TCP
     port: 9001
     targetPort: 9001
-  type: LoadBalancer
+    nodePort: 30000
+  type: NodePort
 ```
 
 ---
@@ -143,19 +144,25 @@ Did you noticed service has been provided with external link? This is your loadb
 
 ### ☘️ Step 6: Access MinIO using Loadbalancer URL
 
-Make sure to replace external_ip with url of your loadbalancer
+Run below command in terminal to get your EC2 IP address
+
+```bash
+curl http://169.254.169.254/latest/meta-data/public-ipv4
+```
 
 - Open your browser
-- Access it via [http://external_ip:port]
+- Access Minio via [ec2-ip-address:30000]
 - Login with the provided credentials
+
+If you see blank screen, change your browser setting to allow javascript,images and popup for above url
 
 🔐 **Credentials**:
 - **Username**: `admin`
 - **Password**: `password`
 
----
 
-Since loadbalancers are expensive so that's why for rest of labs, we will do port-forwarding which is free of cost and good for local testing
+
+---
 
 ### ☘️ Step 8: Clean Up Resources
 
