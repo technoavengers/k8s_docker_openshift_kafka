@@ -26,10 +26,11 @@ kubectl get nodes
 ```
 You should see a node with the status `Ready`.
 
-2. If above step failed, then start Minikube with 4 CPUs and 8GB of memory:
+2. If above step failed, then start k3s:
 
 ```bash
-minikube start --cpus=4 --memory=8192
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 ```
 
 ## ☘️ Cleanup 📦🧰🔍
@@ -179,7 +180,8 @@ spec:
     protocol: TCP
     port: 9001
     targetPort: 9001
-  type: ClusterIP
+    nodePort: 30000
+  type: NodePort
 ```
 
 ### Apply the Service:
@@ -192,15 +194,22 @@ kubectl apply -f minio_service.yaml
 kubectl get service minio-service
 ```
 
-### Port Forward to Access MinIO Console:
+### Access MinIO Console:
+Run below command to get your EC2 ip address 
+
 ```bash
-kubectl port-forward svc/minio-service 9001
+curl http://169.254.169.254/latest/meta-data/public-ipv4
 ```
 
-Then open browser: [http://localhost:9001](http://localhost:9001)
+- Open your browser
+- Access Minio via [ec2-ip-address:30000]
+- Login with the provided credentials
 
-- Username: `admin`
-- Password: `password`
+If you see blank screen, change your browser setting to allow javascript,images and popup for above url
+
+🔐 **Credentials**:
+- **Username**: `admin`
+- **Password**: `password`
 
 ---
 

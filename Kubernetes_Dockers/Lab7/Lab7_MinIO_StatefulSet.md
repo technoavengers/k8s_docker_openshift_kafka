@@ -22,11 +22,13 @@ kubectl get nodes
 ```
 You should see a node with the status `Ready`.
 
-2. If above step failed, then start Minikube with 4 CPUs and 8GB of memory:
+2. If above step failed, then start k3s:
 
 ```bash
-minikube start --cpus=4 --memory=8192
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 ```
+
 
 ## ☘️ Cleanup 📦🧰🔍
 ```bash

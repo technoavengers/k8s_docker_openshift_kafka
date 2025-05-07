@@ -115,7 +115,7 @@ You should see 2 revision,
 ## ⏪ Step 6: Rollback to Revision 1 🔄🎯🔙
 
 ```bash
-kubectl rollout undo deployment mywebapp --to-revision=1
+kubectl rollout undo deployment minio-deployment --to-revision=1
 ```
 
 ### ✅ Now verify the status:

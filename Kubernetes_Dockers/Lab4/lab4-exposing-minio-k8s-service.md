@@ -7,7 +7,7 @@
 
 ## 🧾 Lab Summary
 
-This lab walks you through deploying MinIO using a ReplicaSet, exposing it with a Kubernetes LoabBalancer Service
+This lab walks you through deploying MinIO using a ReplicaSet, exposing it with a Kubernetes Service
 You will learn about Service types, how labels connect Services to Pods, and how scaling works in practice—essential skills for real-world Kubernetes deployment and service discovery.
 
 ---
@@ -47,8 +47,8 @@ You should see a node with the status `Ready`.
 2. If above step failed, then start Minikube with 4 CPUs and 8GB of memory:
 
 ```bash
-curl -sfL https://get.k3s.io | sh -
-alias kubectl='sudo k3s kubectl'
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 ```
 
 ### ☘️ Cleanup
