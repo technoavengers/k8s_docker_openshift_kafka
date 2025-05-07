@@ -48,7 +48,9 @@ You should see a node with the status `Ready`.
 
 ```bash
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+sudo cp /etc/rancher/k3s/k3s.yaml $HOME/k3s.yaml
+sudo chown $USER:$USER $HOME/k3s.yaml
+export KUBECONFIG=$HOME/k3s.yaml
 ```
 
 ### ☘️ Cleanup
