@@ -20,12 +20,13 @@ In this lab, participants will enhance the MinIO StatefulSet by incorporating Ku
 ---
 
 ## ☘️ Pre-requiste : Verify Cluster
-1. Make sure your minikube cluster is running 
-
-If not start Minikube:
+1. make sure your k3s cluster is running, if not run below to start k3s cluster
 
 ```bash
-minikube start
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
+sudo cp /etc/rancher/k3s/k3s.yaml $HOME/k3s.yaml
+sudo chown $USER:$USER $HOME/k3s.yaml
+export KUBECONFIG=$HOME/k3s.yaml
 ```
 
 ## ☘️ Cleanup 📦🧰🔍
