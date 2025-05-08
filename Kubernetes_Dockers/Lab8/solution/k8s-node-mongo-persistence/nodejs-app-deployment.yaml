@@ -13,8 +13,6 @@ spec:
       labels:
         type: frontend
     spec:
-      imagePullSecrets:
-      - name: regpriv3
       containers:
       - name: nodeapp-container
         image: navjoy220161/node-mongo:1.0.10
