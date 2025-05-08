@@ -17,18 +17,10 @@ In this lab, participants will deploy MinIO as a StatefulSet in Kubernetes, ensu
 ## ☘️ Pre-requiste : Verify Cluster
 1. Make sure your minikube cluster is running 
 
-```bash
-kubectl get nodes
-```
-You should see a node with the status `Ready`.
-
-2. If above step failed, then start k3s:
+Start the cluster if not already started
 
 ```bash
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
-sudo cp /etc/rancher/k3s/k3s.yaml $HOME/k3s.yaml
-sudo chown $USER:$USER $HOME/k3s.yaml
-export KUBECONFIG=$HOME/k3s.yaml
+minikube start
 ```
 
 

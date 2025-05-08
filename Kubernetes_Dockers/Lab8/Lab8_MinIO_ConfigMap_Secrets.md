@@ -22,15 +22,10 @@ In this lab, participants will enhance the MinIO StatefulSet by incorporating Ku
 ## ☘️ Pre-requiste : Verify Cluster
 1. Make sure your minikube cluster is running 
 
-```bash
-kubectl get nodes
-```
-You should see a node with the status `Ready`.
-
-2. If above step failed, then start Minikube with 4 CPUs and 8GB of memory:
+If not start Minikube:
 
 ```bash
-minikube start --cpus=4 --memory=8192
+minikube start
 ```
 
 ## ☘️ Cleanup 📦🧰🔍

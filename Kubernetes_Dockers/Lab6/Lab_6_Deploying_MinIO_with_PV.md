@@ -19,17 +19,12 @@ In this  lab, participants will deploy MinIO as a Deployment in Kubernetes using
 ## 🛠️ Step-by-Step Instructions
 
 ## ☘️ Pre-requiste : Verify Cluster
-1. Make sure your minikube cluster is running 
+
+1. Start cluster:
+
+Start the cluster if not already started 
 
 ```bash
-kubectl get nodes
-```
-You should see a node with the status `Ready`.
-
-2. If above step failed, then start k3s:
-
-```bash
-sudo /usr/local/bin/k3s-uninstall.sh
 minikube start
 ```
 
