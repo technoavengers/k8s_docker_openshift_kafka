@@ -58,7 +58,7 @@ spec:
 
 ```bash
 kubectl apply -f mongodb-headless-service.yaml
-kubectl get svc mongodb-headless
+kubectl get svc
 ```
 
 ### ClusterIP Service (`mongodb-service.yaml`)
@@ -77,7 +77,7 @@ spec:
 
 ```bash
 kubectl apply -f mongodb-service.yaml
-kubectl get svc mongodb-service
+kubectl get svc
 ```
 
 ---
@@ -92,7 +92,7 @@ kind: StatefulSet
 metadata:
   name: mongodb
 spec:
-  serviceName: "mongodb-headless"
+  serviceName: "mongodb-h"
   replicas: 2
   selector:
     matchLabels:
