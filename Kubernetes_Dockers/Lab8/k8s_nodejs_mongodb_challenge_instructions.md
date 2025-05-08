@@ -16,6 +16,25 @@ In this challenge, you will deploy a Node.js application connected to MongoDB us
 
 ## 🧾 Setup Overview
 
+## ☘️ Pre-requiste : Verify Cluster
+1. make sure your k3s cluster is running, if not run below to start k3s cluster
+
+```bash
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
+sudo cp /etc/rancher/k3s/k3s.yaml $HOME/k3s.yaml
+sudo chown $USER:$USER $HOME/k3s.yaml
+export KUBECONFIG=$HOME/k3s.yaml
+```
+
+## ☘️ Cleanup 📦🧰🔍
+```bash
+kubectl delete --all deployment
+kubectl delete --all replicaset
+kubectl delete --all pod
+kubectl delete svc minio-service
+kubectl delete --all statefulsets
+```
+
 ### 🧩 Kubernetes Resources
 
 | Component     | Type         | Details                     |
@@ -50,6 +69,7 @@ The Node.js app expects the following environment variables:
 Use `env:` or `envFrom:` in your `nodeapp-deployment.yaml` to pass these values via a ConfigMap or directly.
 
 ---
+
 
 ## ▶️ Start the Project
 
