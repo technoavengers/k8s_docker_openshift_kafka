@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: app-configmap-test
 data:
-  mongo-host: #Add mongodb connection URL - Hint (Add mongodb-service domain name:port)
-  app-port: '3000'
-  mongo-database: docker-node-mongo
+  MONGO_HOST:  #Add mongodb connection URL - Hint (Add mongodb-service domain name:port)
+  APP_PORT: '3000'
+  MONGO_DATABASE: docker-node-mongo
