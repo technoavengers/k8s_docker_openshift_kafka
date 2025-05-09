@@ -44,17 +44,7 @@ helm repo update
 ## ☘️ Step 2: Install Cassandra using Helm
 
 ```bash
-helm upgrade --install cassandra oci://registry-1.docker.io/bitnamicharts/cassandra 
-  --set replicaCount=1 
-  --set resources.requests.memory=1Gi 
-  --set resources.requests.cpu=500m 
-  --set resources.limits.memory=2Gi 
-  --set resources.limits.cpu=1 
-  --set persistence.size=1Gi 
-  --set volumePermissions.enabled=true 
-  --set volumePermissions.securityContext.runAsUser=0 
-  --set dbUser.password=cassandra 
-  --set dbUser.forcePassword=true
+helm upgrade --install cassandra oci://registry-1.docker.io/bitnamicharts/cassandra --set replicaCount=1 --set resources.requests.memory=1Gi --set resources.requests.cpu=500m --set resources.limits.memory=2Gi --set resources.limits.cpu=1 --set persistence.size=1Gi --set volumePermissions.enabled=true --set volumePermissions.securityContext.runAsUser=0 --set dbUser.password=cassandra --set dbUser.forcePassword=true
 ```
 
 ---
@@ -69,23 +59,19 @@ kubectl get pods
 
 ---
 
-## ☘️ Step 4: Port-Forward to Access Cassandra from Local Machine
-
-```bash
-kubectl port-forward svc/cassandra 9042:9042
-```
-
-> 🚨 Keep the above command running in a terminal — do not close it.
-
----
-
 ## ☘️ Step 5: Connect to Cassandra using `cqlsh`
 
-Open a new terminal and run `cqlsh.exe` to test your Cassandra setup. 
-You have been provided with `cqlsh.exe` in your Lab10 folder. Make sure you are in Lab10 folder in terminal before running below command.
+Connect to the pod
 
 ```bash
-./cqlsh.exe localhost 9042 -u cassandra -p cassandra
+kubectl exec -it cassandra-0 -- bash
+```
+
+Inside Terminal
+
+```bash
+cd bin
+cqlsh cassandra 9042 -u cassandra -p cassandra
 ```
 
 ---
