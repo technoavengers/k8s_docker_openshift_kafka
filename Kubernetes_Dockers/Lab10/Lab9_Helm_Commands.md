@@ -117,7 +117,8 @@ service:
 Let's upgrade the helm chart with custom values using `custom-values.yaml` file:
 
 ```bash
-helm upgrade my-nginx-custom bitnami/nginx -f custom-values.yaml
+cd Kubernetes_Dockers/lab10
+helm upgrade my-nginx bitnami/nginx -f custom-values.yaml
 ```
 
 It will override default service type to type NodePort because of my custom value.

@@ -20,7 +20,7 @@ You can also inspect default values used in the chart by downloading on local ma
 Make sure you are in Lab10 folder
 
 ```bash
-cd Kubernetes_Dockers/Lab10
+cd Kubernetes_Dockers/Lab11
 ```
 
 Let's download default values.yaml in Lab10 folder

@@ -57,6 +57,7 @@ spec:
 ```
 
 ```bash
+cd Kubernetes_Dockers/Lab9
 kubectl apply -f mongodb-headless-service.yaml
 kubectl get svc
 ```
@@ -124,8 +125,7 @@ spec:
 Apply it:
 
 ```bash
-cd Kubernetes_Dockers/Lab7
-kubectl apply -f mongo_statefulset.yaml
+kubectl apply -f mongodb-statefulset.yaml
 ```
 
 ---
@@ -134,7 +134,7 @@ kubectl apply -f mongo_statefulset.yaml
 
 ```bash
 kubectl get statefulset mongodb
-kubectl get pods -l app=mongo
+kubectl get pods
 ```
 
 Expected pods:
@@ -152,13 +152,23 @@ kubectl exec -it mongodb-0 -- bash
 Inside the pod:
 
 ```bash
-ping mongodb-1.mongodb-headless
 apt update && apt install dnsutils -y
-nslookup mongodb-1.mongodb-headless
+```
+Lookup Mongodb headless service
+
+```bash
+nslookup mongodb-h
+```
+Did you noticed that it gave you IP address for all underlying pod
+
+Let's get IP adress/DNS of a particular pod
+
+```bash
+nslookup mongodb-1.mongodb-h
 ```
 
-Expected DNS format:
 
+Expected DNS format:
 ```
 mongodb-0.mongodb-headless.default.svc.cluster.local
 ```
@@ -167,20 +177,19 @@ mongodb-0.mongodb-headless.default.svc.cluster.local
 
 ## 🔧 Step 5: Test ClusterIP Service
 
-Launch a temporary pod:
+Let's lookup clusterIP service
 
 ```bash
-kubectl run tester --rm -it --image=ubuntu -- bash
+nslookup mongodb-service
 ```
 
-Inside the tester pod:
+Did you noticed that mongodb service just provides its own dns and ip address and does not provide any Info for underlying pod
+
+Let's come out of pod
 
 ```bash
-apt update && apt install -y mongodb-clients
-mongo --host mongodb-service --port 27017
+exit
 ```
-
-> This confirms the ClusterIP service is working for internal access.
 
 ---
 
@@ -188,9 +197,11 @@ mongo --host mongodb-service --port 27017
 
 ```bash
 kubectl scale statefulset mongodb --replicas=5
-kubectl get pods -l app=mongo --watch
 ```
 
+```bash
+kubectl get pods
+```
 Observe pod creation order:
 - mongodb-0
 - mongodb-1
@@ -215,7 +226,7 @@ Each pod has its own PVC, such as:
 
 ```bash
 kubectl delete statefulset mongodb
-kubectl delete svc mongodb-headless mongodb-service
+kubectl delete svc mongodb-h mongodb-service
 kubectl delete pvc -l app=mongo
 ```
 
