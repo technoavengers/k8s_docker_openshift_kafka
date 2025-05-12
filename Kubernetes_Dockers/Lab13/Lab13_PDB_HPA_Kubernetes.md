@@ -156,7 +156,7 @@ kubectl top nodes
 You have been provided with hpa.yaml in your Lab13, apply the file to create Horizontal Pod Autoscaler
 
 ```bash
-kubectl apply - hpa.yaml
+kubectl apply -f hpa.yaml
 ```
 
 ## ☘️ Step 4: Check HPA status:

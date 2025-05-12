@@ -4,8 +4,8 @@ metadata:
   name: api-gateway
   namespace: default
 spec:
-  maxReplicas: 2
-  minReplicas: 5
+  maxReplicas: 5
+  minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
