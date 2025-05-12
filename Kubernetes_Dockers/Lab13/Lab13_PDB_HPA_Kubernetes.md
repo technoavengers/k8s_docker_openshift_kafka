@@ -14,6 +14,18 @@ This lab introduces two important Kubernetes features for availability and scala
 #  PART 1- PodDisruptionBudget (PDB)
 PDB ensures that a minimum number of Pods remain available during voluntary disruptions like node drains or rolling updates.
 
+## ☘️ Setup: Start Minikube
+
+Start minikube with 3 nodes
+```bash
+minikube start --nodes=3
+```
+Check nodes
+```bash
+kubectl get node
+```
+
+
 
 ## ☘️ Step 1: Create a Deployment
 
@@ -21,15 +33,18 @@ PDB ensures that a minimum number of Pods remain available during voluntary disr
 kubectl create deployment web --image=nginx --replicas=3
 ```
 
-Expose the deployment:
+## ☘️ Step 2: Check Pods Location
+
+Check where are pods running?:
 
 ```bash
-kubectl expose deployment web --port=80 --target-port=80 --type=ClusterIP
+kubectl get pod -o wide
 ```
 
----
+Did you noticed that pods are running on different minikube nodes
 
-## ☘️ Step 2: Create a PodDisruptionBudget
+
+## ☘️ Step 3 : Create a PodDisruptionBudget
 
 You have been provided with  file named `pdb.yaml` in Lab12 folder.
 
@@ -51,42 +66,68 @@ This PodDisruptionBudget (PDB) ensures that at least 2 pods with the label app: 
 - Rolling updates
 - Cluster scaling
 
-## ☘️ Step 2: Apply the PDB:
+## ☘️ Step 4: Apply the PDB:
 
 ```bash
 kubectl apply -f pdb.yaml
 ```
 
-## ☘️ Step 3: Check PDB status:
+## ☘️ Step 5: Check PDB status:
 
 ```bash
 kubectl get pdb
 ```
 
-## ☘️ Step 4: Simulate a Node Drain to Test PDB:
+## ☘️ Step 6: Simulate a Node Drain to Test PDB:
 In Kubernetes, draining a node simulates a voluntary disruption by cordoning the node (preventing new pods from being scheduled) and evicting all the pods on that node. PDB will prevent more pods than the minAvailable number from being evicted.
 – Drain the Node
 
 ```bash
-kubectl drain minikube --ignore-daemonsets --delete-emptydir-data
+kubectl drain minikube-m02 --ignore-daemonsets --delete-emptydir-data
 ```
 
-This command will attempt to evict pods on the node. If the PDB works as expected, it will block the eviction of more than one MinIO pod, ensuring two remain running
+Did you see pdb constraint message, if not yet keep moving
 
-## ☘️ Step 5: Verify the Behavior
+## ☘️ Step 7: Check pods location
 
-After running the drain command, check the status of the pods:
+After running the drain command, check the status of the pods and check where are they running?
 
 ```bash
 kubectl get pods -o wide
 ```
 
-## ☘️ Step 6: Uncordon the Node
+## ☘️ Step 8: Drain Node
+Let's drain another node
+```bash
+kubectl drain minikube-m03 --ignore-daemonsets --delete-emptydir-data
+```
+Did you see pdb constraint message now, which means it will not allow this node to go down unless 2 replicas are not available on some other node. After it is able to achive min 2 replicas on some other node, node can go down.
+
+
+## ☘️ Step 9: Check Pods Location
+
+After running the drain command, check the status of the pods and check where are they running?
+
+```bash
+kubectl get pods -o wide
+```
+
+
+## ☘️ Step 10: Uncordon the Node
 After testing the node drain and PDB behavior, you can uncordon the node to allow scheduling again:
 
 ```bash
-kubectl uncordon minikube
+kubectl uncordon minikube-m02
+kubectl uncordon minikube-m03
 ```
+
+## ☘️ Step 11: Check Node status
+
+```bash
+kubectl get node
+```
+
+END OF PART-1
 
 
 # Part-2  Horizontal Pod Autoscaler (HPA)
@@ -112,8 +153,10 @@ kubectl top nodes
 
 ## ☘️ Step 3: Apply HPA to the Deployment
 
+You have been provided with hpa.yaml in your Lab13, apply the file to create Horizontal Pod Autoscaler
+
 ```bash
-kubectl autoscale deployment web --cpu-percent=50 --min=2 --max=5
+kubectl apply - hpa.yaml
 ```
 
 ## ☘️ Step 4: Check HPA status:
