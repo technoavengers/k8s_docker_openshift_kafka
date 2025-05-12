@@ -10,16 +10,22 @@ The Metrics Server is a cluster-wide aggregator of resource usage data (like CPU
 minikube addons enable metrics-server
 ```
 
+
 ## ☘️ Step 2: Verify it's running:
 
 ```bash
-kubectl get deployment metrics-server -n kube-system
 kubectl top nodes
+```
+## ☘️ Step 3: Create deployment
+Check the deployment file, check out the resource section to see requested resources and what is limit on resources.
+
+```bash
+kubectl apply -f deployment_with_resources.yaml
 ```
 
 ---
 
-## ☘️ Step 3: Apply HPA to the Deployment
+## ☘️ Step 4: Apply HPA to the Deployment
 
 You have been provided with hpa.yaml in your Lab13, apply the file to create Horizontal Pod Autoscaler
 
@@ -32,20 +38,6 @@ kubectl apply -f hpa.yaml
 ```bash
 kubectl get hpa
 ```
-
----
-
-## ☘️ Step 5: Scale down to only 1 replicas first
-```bash
-kubectl scale deployment web --replicas=1
-```
-
-## ☘️ Step 6: Check Pods
-
-Did you noticed that even though you have manually scaled it down to 1, but hpa we have said ,we want minimum 2 replicas, that why you see 2 pods
-
-```bash
-kubectl get pod
 ```
 
 
@@ -80,7 +72,7 @@ kubectl get hpa -w
 ```
 
 
-As the CPU usage increases, the HPA will increase the number of MinIO replicas up to the maximum (5 replicas, in this case). Once the CPU usage decreases, the HPA will scale down the pods.
+As the CPU usage increases, the HPA will increase the number of  replicas up to the maximum (5 replicas, in this case). Once the CPU usage decreases, the HPA will scale down the pods.
 
 
 
